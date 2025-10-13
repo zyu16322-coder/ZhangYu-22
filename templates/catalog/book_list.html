@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}图书列表{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3">图书列表</h1>
+  <a class="btn btn-primary" href="/books/new/">新增图书</a>
+  </div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>标题</th>
+      <th>作者</th>
+      <th>出版日期</th>
+      <th>库存</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+      <tr>
+        <td><a href="/books/{{ book.pk }}/">{{ book.title }}</a></td>
+        <td>{{ book.author.name }}</td>
+        <td>{{ book.published_date|default:"-" }}</td>
+        <td>{{ book.copies_available }}/{{ book.copies_total }}</td>
+        <td>
+          <a class="btn btn-sm btn-secondary" href="/books/{{ book.pk }}/edit/">编辑</a>
+          <a class="btn btn-sm btn-outline-danger" href="/books/{{ book.pk }}/delete/">删除</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="text-center text-muted">暂无图书</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
